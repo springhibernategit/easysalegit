@@ -40,7 +40,8 @@ public class MenuAdministratorProcess {
 				break;
 
 			case 2:
-				JOptionPane.showMessageDialog(null, "test2");
+				String passwordOfUser =JOptionPane.showInputDialog("Enter password of user:");
+				userRepository.deleteUser(passwordOfUser);
 				break;
 
 			case 3:

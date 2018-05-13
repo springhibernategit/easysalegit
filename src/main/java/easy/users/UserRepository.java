@@ -1,5 +1,8 @@
 package easy.users;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -126,14 +129,6 @@ public class UserRepository {
 			user.setRole(Role.CASHIER);
 		}
 
-		Shop shop = new Shop();
-		shop.setName("Sklep Warszawa");
-		shop.setAddress("Koszykowa 111");
-		shop.setNumber("SklepWarszawa1");
-
-		user.setShop(Arrays.asList(shop));
-		// user2.setShop()
-
 		entityManager.getTransaction().begin();
 		entityManager.persist(user);
 		entityManager.getTransaction().commit();
@@ -166,6 +161,27 @@ public class UserRepository {
 	
 		
 		entityManager.close();
+	}
+	
+	
+	public void deleteUser(String password){
+	EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+	entityManager.getTransaction().begin();
+	Query query = entityManager.createQuery("delete a from User a where a.password = :password");
+	query.setParameter("password", password);
+	
+	entityManager.getTransaction().commit();
+	
+
+	entityManager.close();
+
+	
+	
+	
+	
+	
+		
 	}
 
 }
