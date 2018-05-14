@@ -9,11 +9,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
+import easy.menu.processes.MenuAdministratorProcess;
 import easy.shops.Shop;
 
 public class UserRepository {
@@ -137,51 +139,51 @@ public class UserRepository {
 		// 1) zrobic relacje manytomany miedzy shop a user i zapisac te obiekty
 		// do bazy
 	}
-	
-	public void searchUser(){
+
+	public void searchUser() {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		String[] sortingSelection = new String[4];
 		sortingSelection[0] = "By first name";
 		sortingSelection[1] = "By last name";
 		sortingSelection[2] = "By role";
 		sortingSelection[3] = "By shop";
-		Object questionAboutHowToSearchUser =JOptionPane.showInputDialog(null, "How would you like to search user::", "Search",
-				JOptionPane.QUESTION_MESSAGE, null, sortingSelection, null);
-		
-		
-		
-		if(questionAboutHowToSearchUser == sortingSelection[0]){
-			String name =JOptionPane.showInputDialog("Enter name:");
-			TypedQuery<User> query = entityManager.createQuery("Select e from User where e.firstName = name",User.class);
-			Object user =query.getSingleResult();
-			JOptionPane.showInputDialog(user);
-			
-			
+		Object questionAboutHowToSearchUser = JOptionPane.showInputDialog(null, "How would you like to search user::",
+				"Search", JOptionPane.QUESTION_MESSAGE, null, sortingSelection, null);
+
+		if (questionAboutHowToSearchUser == sortingSelection[0]) {
+			String name = JOptionPane.showInputDialog("Enter name:");
+			TypedQuery<User> query = entityManager.createQuery("Select e from User e where e.firstName = :name",
+					User.class);
+			query.setParameter("name", name);
+			List<User> users = query.getResultList();
+			JOptionPane.showInputDialog(users);
+
 		}
-	
-		
+
 		entityManager.close();
 	}
-	
-	
-	public void deleteUser(String password){
-	EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-	entityManager.getTransaction().begin();
-	Query query = entityManager.createQuery("delete a from User a where a.password = :password");
-	query.setParameter("password", password);
-	
-	entityManager.getTransaction().commit();
-	
+	public void deleteUser() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-	entityManager.close();
-
-	
-	
-	
-	
-	
+		entityManager.getTransaction().begin();
+		String passwordOfUser = JOptionPane.showInputDialog("Enter password of user:");
+		TypedQuery<User> query = entityManager.createQuery("select a from User a where a.password = :password", User.class);
+		query.setParameter("password",passwordOfUser);
+		try {
+			User user = query.getSingleResult();
+			entityManager.remove(user);
+		} catch (NoResultException e) {
+			JOptionPane.showMessageDialog(null, "Nie znaleziono u¿ytkownika");
+		}
+		entityManager.getTransaction().commit();
 		
+		
+		
+
+		entityManager.close();
+		
+
 	}
 
 }

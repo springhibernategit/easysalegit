@@ -6,14 +6,14 @@ import easy.users.UserRepository;
 import easy.view.JOptionPaneView;
 
 public class MenuAdministratorProcess {
-	
+
 	private UserRepository userRepository;
-	
+
 	public MenuAdministratorProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
-	public void process(int menuAdministrator) {
+	public boolean process(int menuAdministrator) {
 
 		switch (menuAdministrator) {
 		case 0:
@@ -32,7 +32,7 @@ public class MenuAdministratorProcess {
 			switch (optionsOfEmployeeManagment) {
 
 			case 0:
-			userRepository.addUserToDataBase();
+				userRepository.addUserToDataBase();
 				break;
 
 			case 1:
@@ -40,8 +40,8 @@ public class MenuAdministratorProcess {
 				break;
 
 			case 2:
-				String passwordOfUser =JOptionPane.showInputDialog("Enter password of user:");
-				userRepository.deleteUser(passwordOfUser);
+
+				userRepository.deleteUser();
 				break;
 
 			case 3:
@@ -51,6 +51,8 @@ public class MenuAdministratorProcess {
 			case 4:
 				JOptionPane.showMessageDialog(null, "test4");
 				break;
+			case 5:
+				return false;
 
 			}
 
@@ -67,6 +69,7 @@ public class MenuAdministratorProcess {
 
 		}
 
+		return true;
 	}
 
 }

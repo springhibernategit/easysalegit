@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import easy.shops.Shop;
+
 @Entity
 public class User {
 
@@ -73,6 +74,12 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", role=" + role + ", shop=" + shop + "]";
 	}
 
 }
