@@ -15,6 +15,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
+
 import easy.menu.processes.MenuAdministratorProcess;
 import easy.shops.Shop;
 
@@ -142,21 +144,38 @@ public class UserRepository {
 
 	public void searchUser() {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		String[] sortingSelection = new String[4];
+		String[] sortingSelection = new String[3];
 		sortingSelection[0] = "By first name";
 		sortingSelection[1] = "By last name";
-		sortingSelection[2] = "By role";
-		sortingSelection[3] = "By shop";
-		Object questionAboutHowToSearchUser = JOptionPane.showInputDialog(null, "How would you like to search user::",
+		sortingSelection[2] = "By shop";
+		Object questionAboutHowToSearchUser = JOptionPane.showInputDialog(null, "How would you like to search user?",
 				"Search", JOptionPane.QUESTION_MESSAGE, null, sortingSelection, null);
 
 		if (questionAboutHowToSearchUser == sortingSelection[0]) {
+			List<User> users;
 			String name = JOptionPane.showInputDialog("Enter name:");
 			TypedQuery<User> query = entityManager.createQuery("Select e from User e where e.firstName = :name",
 					User.class);
 			query.setParameter("name", name);
+			users = query.getResultList();
+
+			try {
+
+				JOptionPane.showMessageDialog(null, users);
+			} catch (IllegalStateException e) {
+				JOptionPane.showMessageDialog(null, "User was not found");
+			}
+
+		} else if (questionAboutHowToSearchUser == sortingSelection[1]) {
+			String lastName = JOptionPane.showInputDialog("Enter last name:");
+			TypedQuery<User> query = entityManager.createQuery("Select e from User e where e.lastName = :lastName",
+					User.class);
+			query.setParameter("lastName", lastName);
 			List<User> users = query.getResultList();
 			JOptionPane.showInputDialog(users);
+
+		} else if (questionAboutHowToSearchUser == sortingSelection[2]) {
+			JOptionPane.showMessageDialog(null, "It does not work yet");
 
 		}
 
@@ -168,22 +187,51 @@ public class UserRepository {
 
 		entityManager.getTransaction().begin();
 		String passwordOfUser = JOptionPane.showInputDialog("Enter password of user:");
-		TypedQuery<User> query = entityManager.createQuery("select a from User a where a.password = :password", User.class);
-		query.setParameter("password",passwordOfUser);
+		TypedQuery<User> query = entityManager.createQuery("select a from User a where a.password = :password",
+				User.class);
+		query.setParameter("password", passwordOfUser);
 		try {
 			User user = query.getSingleResult();
 			entityManager.remove(user);
 		} catch (NoResultException e) {
-			JOptionPane.showMessageDialog(null, "Nie znaleziono u¿ytkownika");
+			JOptionPane.showMessageDialog(null, "User was not found");
 		}
 		entityManager.getTransaction().commit();
-		
-		
-		
 
 		entityManager.close();
-		
 
+	}
+
+	public void updateUser() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		String passwordOfUser = JOptionPane.showInputDialog("Enter password of user which you want to edit :");
+		TypedQuery<User> query = entityManager.createQuery("select a from User a where a.password = :password",
+				User.class);
+		query.setParameter("password", passwordOfUser);
+		User user = query.getSingleResult();
+
+		String[] updateSelection = new String[3];
+		updateSelection[0] = "first name";
+		updateSelection[1] = "last name";
+		Object questionAboutHowToUpdateUser = JOptionPane.showInputDialog(null, "What would you like to edit??",
+				"Update", JOptionPane.QUESTION_MESSAGE, null, updateSelection, null);
+		if (questionAboutHowToUpdateUser == updateSelection[0]) {
+			String newName =JOptionPane.showInputDialog("Enter new name:");
+			Query query2 = entityManager.createQuery("update User set firstName = :firstName");
+    				
+			query2.setParameter("firstName", newName);
+
+			int result = query.executeUpdate();
+			
+			
+		} else if (questionAboutHowToUpdateUser == updateSelection[1]) {
+
+		}
+
+		entityManager.getTransaction().commit();
+
+		entityManager.close();
 	}
 
 }

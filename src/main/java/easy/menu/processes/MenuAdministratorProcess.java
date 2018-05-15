@@ -45,11 +45,10 @@ public class MenuAdministratorProcess {
 				break;
 
 			case 3:
-				JOptionPane.showMessageDialog(null, "test3");
+				userRepository.updateUser();
 				break;
 
 			case 4:
-				JOptionPane.showMessageDialog(null, "test4");
 				break;
 			case 5:
 				return false;
@@ -59,14 +58,17 @@ public class MenuAdministratorProcess {
 			break;
 
 		case 3:
-			JOptionPane.showMessageDialog(null, "Cztery");
+
 			break;
 
 		case 4:
 
-			System.exit(0);
+			JOptionPane.showInputDialog("Update prices");
 			break;
-
+		case 5:
+			System.exit(0);
+			userRepository.closeEntityManagerFactory();
+			break;
 		}
 
 		return true;
