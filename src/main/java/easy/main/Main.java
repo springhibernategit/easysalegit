@@ -1,8 +1,11 @@
 package easy.main;
 
+import java.awt.Menu;
+
 import javax.swing.JOptionPane;
 
 import easy.menu.processes.MenuAdministratorProcess;
+import easy.menu.processes.MenuCashierProcess;
 import easy.users.Role;
 import easy.users.UserRepository;
 import easy.view.JOptionPaneView;
@@ -35,6 +38,8 @@ public class Main {
 			} else if (role == Role.CASHIER) {
 				int menuCashier = JOptionPaneView.menu(new String[] { "Start selling", "Update prices",
 						"Export of receipts", "Finish the sale", "Exit", }, "Easy-Sale Cashier Module");
+				MenuCashierProcess menuCashierProcess = new MenuCashierProcess(userRepository);
+				endOfProgram = menuCashierProcess.process(menuCashier);
 			} else {
 				JOptionPane.showMessageDialog(null, "Incorrect username or password");
 				endOfProgram = false;
