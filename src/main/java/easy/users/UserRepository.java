@@ -217,14 +217,14 @@ public class UserRepository {
 		Object questionAboutHowToUpdateUser = JOptionPane.showInputDialog(null, "What would you like to edit??",
 				"Update", JOptionPane.QUESTION_MESSAGE, null, updateSelection, null);
 		if (questionAboutHowToUpdateUser == updateSelection[0]) {
-			String newName =JOptionPane.showInputDialog("Enter new name:");
-			Query query2 = entityManager.createQuery("update User set firstName = :firstName");
-    				
-			query2.setParameter("firstName", newName);
+			String newName = JOptionPane.showInputDialog("Enter new name:");
+			Query query2 = entityManager
+					.createQuery("update User set firstName = :firstName" + " where password = :passwordOfUser");
 
-			int result = query.executeUpdate();
-			
-			
+			query2.setParameter("firstName", newName);
+			query2.setParameter("passwordOfUser", passwordOfUser);
+			query2.executeUpdate();
+
 		} else if (questionAboutHowToUpdateUser == updateSelection[1]) {
 
 		}

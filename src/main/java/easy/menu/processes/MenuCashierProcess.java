@@ -8,9 +8,7 @@ public class MenuCashierProcess {
 
 	private UserRepository userRepository;
 
-	public boolean MenuCashierProcess(int menuCashier){
-
-	
+	public boolean menuCashierProcess;
 
 	public MenuCashierProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -24,13 +22,9 @@ public class MenuCashierProcess {
 			break;
 		case 1:
 			JOptionPane.showMessageDialog(null, "Dwa");
-			
-			return true;
-		}
-		
-		
-	}
 
-}
+		}
+		return true;
+	}
 
 }
