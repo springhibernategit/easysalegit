@@ -64,26 +64,21 @@ public class JOptionPaneView {
 		return option;
 
 	}
-	
-	
-	public static int menuSales(String[] nameOfButtons, String message){
-		
+
+	public static void menuSales() {
+
 		UIManager.put("OptionPane.background", new ColorUIResource(Color.decode("#BDBDBD")));
 		UIManager.put("Panel.background", new ColorUIResource(Color.decode("#BDBDBD")));
 		UIManager.put("OptionPane.messageForeground", Color.decode("#424242"));
 		UIManager.put("Button.background", Color.decode("#757575"));
-		UIManager.put("OptionPane.messageFont", new FontUIResource(Font.MONOSPACED, Font.CENTER_BASELINE, 24));
+		UIManager.put("OptionPane.messageFont", new FontUIResource(Font.MONOSPACED, Font.CENTER_BASELINE, 30));
 		UIManager.put("Button.foreground", Color.decode("#E0E0E0"));
 		UIManager.put("Button.select", Color.decode("#9E9E9E"));
 		UIManager.put("Button.focus", Color.decode("#757575"));
 		UIManager.put("Label.background", Color.red);
-
-
-		return option;
-	
-	
 		
 		
+
 	}
 
 }
