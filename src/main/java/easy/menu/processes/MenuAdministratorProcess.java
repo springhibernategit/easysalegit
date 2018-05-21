@@ -2,12 +2,14 @@ package easy.menu.processes;
 
 import javax.swing.JOptionPane;
 
+import easy.sell.SellProccess;
 import easy.users.UserRepository;
 import easy.view.JOptionPaneView;
 
 public class MenuAdministratorProcess {
 
 	private UserRepository userRepository;
+	private SellProccess sellProccess;
 
 	public MenuAdministratorProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -17,7 +19,7 @@ public class MenuAdministratorProcess {
 
 		switch (menuAdministrator) {
 		case 0:
-			JOptionPane.showMessageDialog(null, "RAZ");
+			sellProccess.sellProccess();
 			break;
 
 		case 1:

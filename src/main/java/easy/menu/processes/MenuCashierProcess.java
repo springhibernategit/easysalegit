@@ -2,11 +2,13 @@ package easy.menu.processes;
 
 import javax.swing.JOptionPane;
 
+import easy.sell.SellProccess;
 import easy.users.UserRepository;
 
 public class MenuCashierProcess {
 
 	private UserRepository userRepository;
+	private SellProccess sellProccess;
 
 	public boolean menuCashierProcess;
 
@@ -18,7 +20,6 @@ public class MenuCashierProcess {
 
 		switch (menuCashier) {
 		case 0:
-			JOptionPane.showMessageDialog(null, "RAZ");
 			break;
 		case 1:
 			JOptionPane.showMessageDialog(null, "Dwa");
