@@ -31,13 +31,13 @@ public class JOptionPaneView {
 		UIManager.put("Panel.background", new ColorUIResource(Color.decode("#BDBDBD")));
 		UIManager.put("OptionPane.messageForeground", Color.decode("#424242"));
 		UIManager.put("Button.background", Color.decode("#757575"));
-		UIManager.put("OptionPane.messageFont", new FontUIResource(Font.MONOSPACED, Font.BOLD, 24));
+		UIManager.put("OptionPane.messageFont", new FontUIResource(Font.MONOSPACED, Font.BOLD, 16));
 		UIManager.put("Button.foreground", Color.decode("#E0E0E0"));
 		UIManager.put("Button.select", Color.decode("#9E9E9E"));
 		UIManager.put("Button.focus", Color.decode("#757575"));
 		UIManager.put("Label.background", Color.red);
 
-		int option = JOptionPane.showOptionDialog(null, "Easy-Sale Module", title, JOptionPane.OK_CANCEL_OPTION,
+		int option = JOptionPane.showOptionDialog(null, "Easy-Sale Module v1.0", title, JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, icon, nameOfButtons, "default");
 
 		return option;

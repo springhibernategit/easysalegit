@@ -6,13 +6,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class SellProccess {
+	
+	private boolean isStarted = false;
+	private int cashDeposit;
 
-	public static int sellProccess() {
+	public int sellProccess() {
 
-		String askAboutCashDeposit = JOptionPane.showInputDialog("Enter cash deposit:");
-		int cashDeposit = Integer.parseInt(askAboutCashDeposit);
+		if(!isStarted) {
+			String askAboutCashDeposit = JOptionPane.showInputDialog("Enter cash deposit:");
+			cashDeposit = Integer.parseInt(askAboutCashDeposit);
+		}
+		isStarted = true;
 
-		Object[] buttons = { "add product","check current list of products", "remove list of product", "payment", "return" };
+		Object[] buttons = { "add product","check current list of products", "remove list of product","give a discount", "payment", "return", };
 
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Enter bar code:"));

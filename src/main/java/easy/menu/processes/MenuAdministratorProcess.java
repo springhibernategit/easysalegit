@@ -13,6 +13,7 @@ public class MenuAdministratorProcess {
 
 	public MenuAdministratorProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
+		sellProccess = new SellProccess();
 	}
 
 	public boolean process(int menuAdministrator) {

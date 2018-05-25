@@ -14,15 +14,26 @@ public class MenuCashierProcess {
 
 	public MenuCashierProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
+		sellProccess = new SellProccess();
 	}
 
 	public boolean process(int menuCashier) {
 
 		switch (menuCashier) {
 		case 0:
+			sellProccess.sellProccess();
 			break;
 		case 1:
 			JOptionPane.showMessageDialog(null, "Dwa");
+
+		case 2:
+
+		case 3:
+
+			break;
+		case 4:
+
+			System.exit(0);
 
 		}
 		return true;
