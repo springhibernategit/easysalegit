@@ -20,11 +20,30 @@ public class MenuAdministratorProcess {
 
 		switch (menuAdministrator) {
 		case 0:
-			sellProccess.sellProccess();
-			break;
+			int process = sellProccess.sellProccess();
+			switch (process) {
+			case 0:
+				sellProccess.addProduct();
+				break;
+			case 1:
+				sellProccess.checkCurrentListOfProducts();
+				break;
+			case 2:
+				sellProccess.removeListOfProducts();
+				break;
+			case 3:
+				sellProccess.giveDiscount();
+				break;
+			case 4:
+				sellProccess.payment();
+				break;
+			case 5:
+				
+
+			}
 
 		case 1:
-			JOptionPane.showMessageDialog(null, "DWA!!!!!!!");
+		
 			break;
 
 		case 2:
@@ -69,6 +88,8 @@ public class MenuAdministratorProcess {
 			JOptionPane.showInputDialog("Update prices");
 			break;
 		case 5:
+			break;
+		case 6:
 			System.exit(0);
 			userRepository.closeEntityManagerFactory();
 			break;

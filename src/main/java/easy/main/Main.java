@@ -1,7 +1,5 @@
 package easy.main;
 
-import java.awt.Menu;
-
 import javax.swing.JOptionPane;
 
 import easy.menu.processes.MenuAdministratorProcess;
@@ -32,7 +30,7 @@ public class Main {
 		do {
 			if (role == Role.ADMINISTRATOR) {
 				int menuAdministrator = JOptionPaneView.menu(new String[] { "Start selling", "File Paths",
-						"Employee managment", "Export of receipts", "Update Prices", "Exit" },
+						"Employee managment", "Export of receipts", "Update Prices", "Finish the sale", "Exit" },
 						"Easy-Sale Administrator Panel");
 
 				endOfProgram = menuAdministratorProcess.process(menuAdministrator);
