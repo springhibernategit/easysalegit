@@ -20,30 +20,30 @@ public class MenuAdministratorProcess {
 
 		switch (menuAdministrator) {
 		case 0:
-			int process = sellProccess.sellProccess();
-			switch (process) {
-			case 0:
-				sellProccess.addProduct();
-				break;
-			case 1:
-				sellProccess.checkCurrentListOfProducts();
-				break;
-			case 2:
-				sellProccess.removeListOfProducts();
-				break;
-			case 3:
-				sellProccess.giveDiscount();
-				break;
-			case 4:
-				sellProccess.payment();
-				break;
-			case 5:
-				
+			boolean czyKoniec = false;
+			while (!czyKoniec) {
+				int process = sellProccess.sellProccess();
+				switch (process) {
+				case 0:
+					sellProccess.addProduct();
+					break;
+				case 1:
+					sellProccess.checkCurrentListOfProducts();
+					break;
+				case 2:
+					sellProccess.removeListOfProducts();
+					break;
+				case 3:
+					sellProccess.payment();
+					break;
+				case 4:
+					czyKoniec = true;
 
+				}
 			}
 
 		case 1:
-		
+
 			break;
 
 		case 2:
@@ -88,11 +88,10 @@ public class MenuAdministratorProcess {
 			JOptionPane.showInputDialog("Update prices");
 			break;
 		case 5:
-			break;
-		case 6:
 			System.exit(0);
 			userRepository.closeEntityManagerFactory();
 			break;
+
 		}
 
 		return true;

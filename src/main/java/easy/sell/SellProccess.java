@@ -1,17 +1,30 @@
 package easy.sell;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.NoResultException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class SellProccess {
+import easy.products.Product;
+import easy.products.ProductRepository;
+import easy.receipts.Receipt;
+import easy.users.Role;
 
+public class SellProccess {
+	ProductRepository productRepository = new ProductRepository();
+	Receipt receipt = new Receipt();
 	private boolean isStarted = false;
 	private int cashDeposit;
 	private JTextField textField;
 	private int result;
-	String[] buttons = { "add product", "check current list of products", "remove list of product", "give a discount",
+	private List<Product> listOfProducts = new ArrayList<>();
+	String[] buttons = { "add product", "check current list of products", "remove list of product",
 			"payment", "return", };
 
 	public int sellProccess() {
@@ -35,18 +48,32 @@ public class SellProccess {
 	}
 
 	public void addProduct() {
+		productRepository.openEntityManagerFactory();
 
-		JOptionPane.showMessageDialog(null, "dodaj produkt");
+		String barCode = textField.getText();
+		Product product = productRepository.doesProductExistInBase(barCode);
+		if (product != null)
+			listOfProducts.add(product);
+		
+
+		// Date date = new Date();
+
+		productRepository.closeEntityManagerFactory();
 
 	}
 
 	public void checkCurrentListOfProducts() {
-		JOptionPane.showMessageDialog(null, "sprawdzenie aktualnej listy");
+		if(listOfProducts.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Lista produktów jest pusta!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Aktualna lista produktów" + listOfProducts);
+		}
 
 	}
 
 	public void removeListOfProducts() {
-		JOptionPane.showMessageDialog(null, "Usuniêcie listy produktów");
+		listOfProducts.clear();
+		JOptionPane.showMessageDialog(null, "Lista produktów usuniêta!");
 	}
 
 	public void giveDiscount() {
@@ -54,7 +81,14 @@ public class SellProccess {
 	}
 
 	public void payment() {
-		JOptionPane.showMessageDialog(null, "zap³ata");
+
+		String[] chooseMethodsOfPayment = new String[3];
+		chooseMethodsOfPayment[0] = "Credit Card";
+		chooseMethodsOfPayment[1] = "Cash";
+		chooseMethodsOfPayment[2] = "Mixed Transaction";
+		
+		Object questionAboutRole = JOptionPane.showInputDialog(null, "Choose Payment Method:", "Payment Methods",
+				JOptionPane.QUESTION_MESSAGE, null, chooseMethodsOfPayment, null);
 	}
 
 }
