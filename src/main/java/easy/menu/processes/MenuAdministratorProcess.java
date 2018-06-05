@@ -1,7 +1,12 @@
 package easy.menu.processes;
 
+import java.math.BigDecimal;
+
 import javax.swing.JOptionPane;
 
+import easy.cashDeclaration.CashDeclaration;
+import easy.cashDeclaration.CashDeclarationRepository;
+import easy.receipts.Receipt;
 import easy.sell.SellProccess;
 import easy.users.UserRepository;
 import easy.view.JOptionPaneView;
@@ -10,6 +15,8 @@ public class MenuAdministratorProcess {
 
 	private UserRepository userRepository;
 	private SellProccess sellProccess;
+	private CashDeclarationRepository cashDeclarationRepository;
+	Receipt receipt = new Receipt();
 
 	public MenuAdministratorProcess(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -71,7 +78,7 @@ public class MenuAdministratorProcess {
 				break;
 
 			case 4:
-				break;
+
 			case 5:
 				return false;
 
@@ -84,8 +91,11 @@ public class MenuAdministratorProcess {
 			break;
 
 		case 4:
+			cashDeclarationRepository.openEntityManagerFactory();
+			JOptionPane.showMessageDialog(null, "Are you sure you want finish your sale?");
+			cashDeclarationRepository.createCashDeclaration(receipt.getListOfProducts());
+			cashDeclarationRepository.closeEntityManagerFactory();
 
-			JOptionPane.showInputDialog("Update prices");
 			break;
 		case 5:
 			System.exit(0);

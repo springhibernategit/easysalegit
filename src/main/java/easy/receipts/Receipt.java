@@ -67,4 +67,10 @@ public class Receipt {
 		this.value = value;
 	}
 
+	@Override
+	public String toString() {
+		return "Receipt [id=" + id + ", name=" + name + ", utilTimeStamp=" + utilTimeStamp + ", listOfProducts="
+				+ listOfProducts + ", value=" + value + "]";
+	}
+
 }

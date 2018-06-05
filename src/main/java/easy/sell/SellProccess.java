@@ -1,5 +1,6 @@
 package easy.sell;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,27 +12,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import easy.cashDeclaration.CashDeclarationRepository;
 import easy.products.Product;
 import easy.products.ProductRepository;
 import easy.receipts.Receipt;
+import easy.receipts.ReceiptRepository;
 import easy.users.Role;
 
 public class SellProccess {
 	ProductRepository productRepository = new ProductRepository();
 	Receipt receipt = new Receipt();
 	private boolean isStarted = false;
-	private int cashDeposit;
 	private JTextField textField;
 	private int result;
 	private List<Product> listOfProducts = new ArrayList<>();
-	String[] buttons = { "add product", "check current list of products", "remove list of product",
-			"payment", "return", };
+	String[] buttons = { "add product", "check current list of products", "remove list of product", "payment",
+			"return", };
+	ReceiptRepository receiptRepository = new ReceiptRepository();
+	CashDeclarationRepository cashDeclarationRepository = new CashDeclarationRepository();
 
 	public int sellProccess() {
 
 		if (!isStarted) {
-			String askAboutCashDeposit = JOptionPane.showInputDialog("Enter cash deposit:");
-			cashDeposit = Integer.parseInt(askAboutCashDeposit);
+			cashDeclarationRepository.CashDeposit();
+
 		}
 		isStarted = true;
 
@@ -54,7 +58,6 @@ public class SellProccess {
 		Product product = productRepository.doesProductExistInBase(barCode);
 		if (product != null)
 			listOfProducts.add(product);
-		
 
 		// Date date = new Date();
 
@@ -63,7 +66,7 @@ public class SellProccess {
 	}
 
 	public void checkCurrentListOfProducts() {
-		if(listOfProducts.isEmpty()) {
+		if (listOfProducts.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Lista produktów jest pusta!");
 		} else {
 			JOptionPane.showMessageDialog(null, "Aktualna lista produktów" + listOfProducts);
@@ -81,14 +84,26 @@ public class SellProccess {
 	}
 
 	public void payment() {
-
+		receiptRepository.openEntityManagerFactory();
 		String[] chooseMethodsOfPayment = new String[3];
 		chooseMethodsOfPayment[0] = "Credit Card";
 		chooseMethodsOfPayment[1] = "Cash";
 		chooseMethodsOfPayment[2] = "Mixed Transaction";
-		
-		Object questionAboutRole = JOptionPane.showInputDialog(null, "Choose Payment Method:", "Payment Methods",
-				JOptionPane.QUESTION_MESSAGE, null, chooseMethodsOfPayment, null);
-	}
 
+		Object questionAboutMethodOfPayment = JOptionPane.showInputDialog(null, "Choose Payment Method:",
+				"Payment Methods", JOptionPane.QUESTION_MESSAGE, null, chooseMethodsOfPayment, null);
+
+		if (questionAboutMethodOfPayment == chooseMethodsOfPayment[0]) {
+			JOptionPane.showMessageDialog(null, "CreditCard");
+			Receipt receipt = receiptRepository.createReceipt(listOfProducts);
+			JOptionPane.showMessageDialog(null, receipt);
+
+		} else if (questionAboutMethodOfPayment == chooseMethodsOfPayment[1]) {
+			JOptionPane.showMessageDialog(null, "cash");
+		} else if (questionAboutMethodOfPayment == chooseMethodsOfPayment[2]) {
+			JOptionPane.showMessageDialog(null, "Mixed Transaction");
+		}
+		receiptRepository.closeEntityManagerFactory();
+
+	}
 }
